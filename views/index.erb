@@ -1,0 +1,38 @@
+<h1>TextSentencer</h1>
+<ul>
+<li>a rule-based sentence splitter</li>
+</ul>
+
+<h2>Usage</h2>
+<h3>input</h3>
+<p>Post a block of text in JSON, as follows:
+<pre>
+{"text":"..."}
+</pre>
+Note that other parts of the JSON content will be ignored.</p>
+
+<h3>output</h3>
+</ul>
+<li>you will get the sentence segments as <b>denotation</b> annotations</li>
+</ol>
+
+<h2>I/F Synopsis (Ruby on Sinatra)</h2>
+<pre style="width:600px;background-color:#EEEEFF">
+require 'sinatra'
+require 'json'
+
+post '/' do
+	## Get the required parameters
+	json = JSON.parse request.body
+
+	text = json['text']
+
+	## sentence splitting
+	#  results are to be added to annotation['denotations']
+
+	## Response with the conversion result
+	headers \
+		'Content-Type' => 'application/json',
+	body annotation.to_json
+end
+</pre>
