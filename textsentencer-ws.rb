@@ -28,7 +28,7 @@ post '/' do
 
 	unless sentences.empty?
 		sentences.each do |b, e|
-			denotations << {:begin => b, :end => e, :object => 'Sentence'}
+			denotations << {:begin => b, :end => e, :obj => 'Sentence'}
 		end
 	end
 
