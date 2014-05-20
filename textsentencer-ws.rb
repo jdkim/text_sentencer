@@ -24,17 +24,15 @@ post '/' do
 	sentences = Sentencer.segment(text)
 
 	# initialization
-	annotation = {}
-	annotation["text"] = text
-	annotation["denotations"] = []
+	denotations = []
 
 	unless sentences.empty?
 		sentences.each do |b, e|
-			annotation["denotations"] << {:begin => b, :end => e, :object => 'Sentence'}
+			denotations << {:begin => b, :end => e, :object => 'Sentence'}
 		end
 	end
 
 	headers \
 		'Content-Type' => 'application/json'
-	body annotation.to_json
+	body denotations.to_json
 end

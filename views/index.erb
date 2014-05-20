@@ -28,11 +28,11 @@ post '/' do
 	text = json['text']
 
 	## sentence splitting
-	#  results are to be added to annotation['denotations']
+	#  results are to be added to denotations
 
 	## Response with the conversion result
 	headers \
 		'Content-Type' => 'application/json',
-	body annotation.to_json
+	body denotations.to_json
 end
 </pre>
