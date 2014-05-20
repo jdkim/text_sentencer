@@ -1,2 +1,2 @@
-require_relative 'textsentencer-ws'
+require './textsentencer-ws'
 run Sinatra::Application

@@ -2,7 +2,7 @@
 require 'sinatra'
 require 'json'
 require 'erb'
-require_relative './textsentencer'
+require './textsentencer'
 
 text = ''
 
