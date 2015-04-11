@@ -1,40 +1,13 @@
 #!/usr/bin/env ruby
+require 'text_sentencer/rules'
 
-module Sentencer
-  # rules
-  PositiveRules =
-    [
-     ['[\.!?]', '[0-9A-Z]'],
-     ['[:]', '[0-9]'],
-     ['[:]', '[A-Z][a-z]']
-    ]
+module TextSentencer; end unless defined? TextSentencer
 
-  NegativeRules =
-    [
-     # Titles before names
-     ['(Mrs|Mmes|Mr|Messrs|Ms|Prof|Dr|Drs|Rev|Hon|Sen|St)\.', '[A-Z][a-z]'],
-
-     # Titles usually before names, but ..
-     ['(Sr|Jr)\.', '[A-Z][a-z]'],
-
-     # Single letter abbriveations, e.g. middle name
-#     ['\b[A-Z]\.', '[A-Z][a-z]'],
-
-     # Abbriveations, e.g. middle name
-     ['\b[A-Z][a-z]*\.', '[0-9A-Z]'],
-
-     # Frequent abbreviations that will never appear in the end of a sentence
-     ['(cf|vs)\.', ''],
-     ['e\.g\.', ''],
-     ['i\.e\.', ''],
-
-     # Others
-     ['(Sec|Chap|Fig|Eq)\.', '[0-9A-Z]']
-    ]
-
-  def Sentencer.segment(intext)
-    text = intext.strip 
-    start = intext.index(text)
+module TextSentencer
+  def TextSentencer.segment(text)
+    original_text = text
+    text = original_text.strip
+    start = original_text.index(text)
 
     ## apply the positive rules to the places of space and newline characters
     pbreaks = []                # breaks by positive rules
@@ -42,7 +15,7 @@ module Sentencer
 
       case text[l]
       when ' '                   # space
-        PositiveRules.each do |r|
+        POSITIVE_RULES.each do |r|
           if (text[0...l] =~ /#{r[0]}\Z/) && (text[l+1..-1] =~ /\A#{r[1]}/)
             pbreaks << l
             break
@@ -57,7 +30,7 @@ module Sentencer
     nbreaks = []                # breaks by negative rules
     pbreaks.each do |l|
       if text[l] == ' '
-        NegativeRules.each do |r|
+        NEGATIVE_RULES.each do |r|
           if (text[0...l] =~ /#{r[0]}\Z/) && (text[l+1..-1] =~ /\A#{r[1]}/)
             nbreaks << l
             break
@@ -86,12 +59,11 @@ module Sentencer
 end
 
 if __FILE__ == $0
-
   text = ''
   ARGF.each do |line|
     text += line
   end
 
-  sen_so = Sentencer.segment(text)
+  sen_so = TextSentencer.segment(text)
   p(sen_so)
 end

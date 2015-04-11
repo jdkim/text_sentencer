@@ -1,38 +1,29 @@
 <h1>TextSentencer</h1>
-<ul>
-<li>a rule-based sentence splitter</li>
-</ul>
+
+<p>A REST service to produce sentence segmentation.</p>
 
 <h2>Usage</h2>
-<h3>input</h3>
-<p>Post a block of text in JSON, as follows:
-<pre>
-{"text":"..."}
+
+<h3>Input</h3>
+<p>Post a block of text as a value of the parameter <i>text</i>, as follows:
+
+<div style="">
+<pre style="display:inline-block; background-color:#ddd; padding:5px">
+curl -d text="Post a text. It will let you know where are sentences." http://bionlp.dbcls.jp/text_sentencer
 </pre>
-Note that other parts of the JSON content will be ignored.</p>
+</div>
 
-<h3>output</h3>
-</ul>
-<li>you will get the sentence segments as <b>denotation</b> annotations</li>
-</ol>
+or
 
-<h2>I/F Synopsis (Ruby on Sinatra)</h2>
-<pre style="width:600px;background-color:#EEEEFF">
-require 'sinatra'
-require 'json'
-
-post '/' do
-	## Get the required parameters
-	json = JSON.parse request.body
-
-	text = json['text']
-
-	## sentence splitting
-	#  results are to be added to denotations
-
-	## Response with the conversion result
-	headers \
-		'Content-Type' => 'application/json',
-	body denotations.to_json
-end
+<div style="">
+<pre style="display:inline-block; background-color:#ddd; padding:5px">
+curl -H "content-type:application/json" -d '{"text":"Post a text. It will let you know where are sentences."}' http://bionlp.dbcls.jp/text_sentencer
 </pre>
+</div>
+
+<h3>Output</h3>
+<p>You will get the sentence segmentation results in the <a href="http://www.pubannotation.org/docs/format/">PubAnnotation JSON format</a>.</p>
+<pre style="display:inline-block; background-color:#ddd; padding:5px">
+[{"begin":0,"end":12,"obj":"Sentence"},{"begin":13,"end":54,"obj":"Sentence"}]
+</pre>
+
