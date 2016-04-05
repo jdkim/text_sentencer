@@ -35,7 +35,7 @@ class TextSentencerWS < Sinatra::Base
 
 			unless sentences.empty?
 				sentences.each do |b, e|
-					denotations << {:begin => b, :end => e, :obj => 'Sentence'}
+					denotations << {:span => {:begin => b, :end => e}, :obj => 'Sentence'}
 				end
 			end
 
