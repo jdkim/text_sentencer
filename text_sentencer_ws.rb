@@ -18,7 +18,10 @@ class TextSentencerWS < Sinatra::Base
 	end
 
 	get '/' do
-		@annotations = TextSentencer.annotations(params["text"]) if params.has_key?("text")
+		if params.has_key?("text")
+			@annotations = TextSentencer.annotations(params["text"])
+			@annotations[:config] = {"entity types" => [{"color" => "#eeeeff", "id" => "Sentence", "type" => "block"}]}
+		end
 		erb :index
 	end
 
