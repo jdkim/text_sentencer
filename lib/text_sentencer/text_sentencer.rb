@@ -4,6 +4,13 @@ require 'text_sentencer/rules'
 module TextSentencer; end unless defined? TextSentencer
 
 module TextSentencer
+  def TextSentencer.annotations(text)
+    return nil if text.nil? || text.empty?
+    sentences = TextSentencer.segment(text)
+    denotations = sentences.inject([]){|c, s| c << {:span => {:begin => s[0], :end => s[1]}, :obj => 'Sentence'}}
+    denotations.empty? ? {text:text} : {text:text, denotations:denotations}
+  end
+
   def TextSentencer.segment(text)
     original_text = text
     text = original_text.strip

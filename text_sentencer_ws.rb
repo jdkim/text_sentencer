@@ -18,6 +18,7 @@ class TextSentencerWS < Sinatra::Base
 	end
 
 	get '/' do
+		@annotations = TextSentencer.annotations(params["text"]) if params.has_key?("text")
 		erb :index
 	end
 
@@ -28,20 +29,11 @@ class TextSentencerWS < Sinatra::Base
 			text = params[:text]
 			raise ArgumentError, "'text' value needs to be supplied." if text.nil?
 
-			sentences = TextSentencer.segment(text)
-
-			# initialization
-			denotations = []
-
-			unless sentences.empty?
-				sentences.each do |b, e|
-					denotations << {:span => {:begin => b, :end => e}, :obj => 'Sentence'}
-				end
-			end
+			annotations = TextSentencer.annotations(text)
 
 			headers \
 				'Content-Type' => 'application/json'
-			body denotations.to_json
+			body annotations.to_json
 
 		rescue ArgumentError => e
 			headers \

@@ -1,0 +1,80 @@
+body {
+	width: 800px;
+	margin: 0;
+	padding: 0;
+}
+
+@media screen and (max-width: 806px) {
+	body {
+		width: 100%;
+	}
+}
+
+#header {
+	margin-bottom: 5px;
+	padding: 10px 5px;
+	background-color: #44aac6;
+}
+
+#title {
+	display: inline-block;
+	font-size: 2em;
+	color: #f0f0f0;
+}
+
+#main {
+	padding: 5px;
+}
+
+section {
+	margin: 5px 0;
+	padding: 5px;
+}
+
+h1, h2, h3 {
+	margin: 5px 0 5px -5px;
+}
+
+h1 {
+	font-size: 1.2em;
+}
+
+h2 {
+	font-size: 1em;
+}
+
+.pane {
+	margin: 5px 0;
+	width: 100%;
+	border-style: solid;
+	border-color: #ccccff;
+	background-color: #eeeeff;
+	border-radius: 10px;
+}
+
+.pane textarea {
+	width: 100%;
+}
+
+.pane h1 {
+	font-size: 1em;
+	font-weight: normal;
+}
+
+ul {
+	margin: 5px;
+	padding-left: 20px;
+}
+
+pre {
+	white-space: pre-wrap;
+	background-color: #EDEDED;
+	padding:5px
+}
+
+.command {
+	display:block;
+	white-space: pre-wrap;
+	background-color: #EDEDED;
+	padding:5px
+}
