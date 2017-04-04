@@ -6,7 +6,7 @@ require 'text_sentencer'
 class TextSentencerWS < Sinatra::Base
 
 	before do
-		if request.content_type && request.content_type.downcase == 'application/json'
+		if request.content_type && request.content_type.downcase =~ /application\/json/
 			body = request.body.read
 			begin
 				json_params = JSON.parse body, :symbolize_names => true unless body.empty?
