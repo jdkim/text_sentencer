@@ -59,8 +59,8 @@ The rule system of text_sentencer consists of four components.
 1. In a text, every position of characters included in _break_candidates_ is regarded as a candidate of sentence break.
 1. For each break candidate, each rule in _positive_rules_ is tested (in the order). If a matching rule is found, the candiate gets a sentence break.
    * Each rule consists of two regular expressions (in perl syntax). 
-   * The first RE is applied to the string previous to the break candidate. Note that '\Z' is automatically added to the end of the first RE, to indicate the end of the string.
-   * The second RE is applied to the string following the break candidate. Note that '\A' is automatically added to the beginning of the second RE, to indicate the beginning of the string.
+   * The first RE is applied to the string preceding the break candidate. Note that '\Z' will be automatically added to the end of the first RE, to indicate the end of the string.
+   * The second RE is applied to the string following the break candidate. Note that '\A' will be automatically added to the beginning of the second RE, to indicate the beginning of the string.
  1. For each break candidate that gets a sentence break by a positive rule, each rule in _negative_rules_ is tested. If a matching rule is found, the sentence break is cancelled.
 
 
@@ -93,7 +93,7 @@ Note that each string in _positive_ and _negative_rules_ represents a regular ex
     // Abbreviations, e.g. middle names
     ["\b[A-Z][a-z]*\\.", "[0-9A-Z]"],
     
-	// Frequent abbreviations which will never appear in the end of a sentence
+    // Frequent abbreviations which will never appear in the end of a sentence
     ["(cf|vs)\\.", ""],
     ["e\\.g\\.", ""],
     ["i\\.e\\.", ""],
