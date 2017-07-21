@@ -1,0 +1,48 @@
+#!/usr/bin/env ruby
+require 'json'
+require 'text_sentencer'
+
+config_filename = nil
+
+## command line option processing
+require 'optparse'
+optparse = OptionParser.new do |opts|
+  opts.banner = "Usage: text_sentencer [options]"
+
+  opts.on('-c', '--config=config_filename', 'specifies the configuration JSON file.') do |c|
+    config_filename = c
+  end
+    
+  opts.on('-h', '--help', 'displays this screen.') do
+    puts opts
+    exit
+  end
+end
+
+optparse.parse!
+
+config = if config_filename && File.file?(config_filename)
+	JSON.parse File.read(config_filename)
+end
+
+sentencer = TextSentencer.new(config)
+
+text = ARGF.read
+
+## Preprocessing
+# It should be removed later
+text.gsub!(/ +/, ' ')
+text.gsub!(/\n+/, "\n")
+text.gsub!(/\t+/, "\t")
+text.gsub!(/\n /, "\n")
+text.gsub!(/ \n/, "\n")
+text.gsub!(/\t /, "\t")
+text.gsub!(/ \t/, "\t")
+text.gsub!(/\n\t/, "\n")
+text.gsub!(/\t\n/, "\n")
+
+annotations = sentencer.annotate(text)
+annotations[:denotations].each do |d|
+	span = d[:span]
+	puts text[span[:begin]...span[:end]]
+end
