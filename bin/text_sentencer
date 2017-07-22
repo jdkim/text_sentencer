@@ -3,6 +3,7 @@ require 'json'
 require 'text_sentencer'
 
 config_filename = nil
+output_mode = :sentences
 
 ## command line option processing
 require 'optparse'
@@ -13,6 +14,10 @@ optparse = OptionParser.new do |opts|
     config_filename = c
   end
     
+  opts.on('-j', '--json_output', 'outputs the result in JSON.') do
+    output_mode = :json
+  end
+
   opts.on('-h', '--help', 'displays this screen.') do
     puts opts
     exit
@@ -28,21 +33,13 @@ end
 sentencer = TextSentencer.new(config)
 
 text = ARGF.read
-
-## Preprocessing
-# It should be removed later
-text.gsub!(/ +/, ' ')
-text.gsub!(/\n+/, "\n")
-text.gsub!(/\t+/, "\t")
-text.gsub!(/\n /, "\n")
-text.gsub!(/ \n/, "\n")
-text.gsub!(/\t /, "\t")
-text.gsub!(/ \t/, "\t")
-text.gsub!(/\n\t/, "\n")
-text.gsub!(/\t\n/, "\n")
-
 annotations = sentencer.annotate(text)
-annotations[:denotations].each do |d|
-	span = d[:span]
-	puts text[span[:begin]...span[:end]]
+
+if output_mode == :json
+  puts JSON.pretty_generate(annotations)
+else
+  annotations[:denotations].each do |d|
+    span = d[:span]
+    puts text[span[:begin]...span[:end]]
+  end
 end
