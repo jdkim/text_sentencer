@@ -1,13 +1,20 @@
 # TextSentencer
 
-TextSentencer is a simple rule-based tool for segmenting a text block into sentences.
+TextSentencer is a simple rule-based tool for segmenting text into sentences.
+
+## Online Demo
+
+http://bionlp.dbcls.jp/text_sentencer
+
+## Requirement
+
+[ruby](https://www.ruby-lang.org/) version 1.9.2 or above
 
 ## Installation
 
-
 ### Gem installation
 
-Download and install text_sentencer with the following.
+Use the [gem](http://guides.rubygems.org/rubygems-basics/) command of [ruby](https://www.ruby-lang.org/) to download and install text_sentencer.
 ```bash
 > gem install text_sentencer
 ```
